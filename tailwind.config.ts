@@ -1,12 +1,13 @@
 import type { Config } from 'tailwindcss';
 
-const svgToDataUri = require('mini-svg-data-uri');
+import svgToDataUri from 'mini-svg-data-uri';
 
-const colors = require('tailwindcss/colors');
 const { default: flattenColorPalette } = require('tailwindcss/lib/util/flattenColorPalette');
 
 const config: Config = {
+  darkMode: ['class'],
   content: ['./src/pages/**/*.{js,ts,jsx,tsx,mdx}', './src/components/**/*.{js,ts,jsx,tsx,mdx}', './src/app/**/*.{js,ts,jsx,tsx,mdx}'],
+  prefix: '',
   theme: {
     extend: {
       backgroundImage: {
@@ -20,8 +21,16 @@ const config: Config = {
         },
       },
       animation: {
+        'accordion-down': 'accordion-down 0.2s ease-out',
+        'accordion-up': 'accordion-up 0.2s ease-out',
         spotlight: 'spotlight 2s ease .75s 1 forwards',
         shimmer: 'shimmer 2s linear infinite',
+        first: 'moveVertical 30s ease infinite',
+        second: 'moveInCircle 20s reverse infinite',
+        third: 'moveInCircle 40s linear infinite',
+        fourth: 'moveHorizontal 40s ease infinite',
+        fifth: 'moveInCircle 20s ease infinite',
+        scroll: 'scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite',
       },
       keyframes: {
         spotlight: {
@@ -46,13 +55,14 @@ const config: Config = {
     },
   },
   plugins: [
+    require('tailwindcss-animate'),
     addVariablesForColors,
     function ({ matchUtilities, theme }: any) {
       matchUtilities(
         {
           'bg-grid': (value: any) => ({
             backgroundImage: `url("${svgToDataUri(
-              `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="${value}"><path d="M0 .5H31.5V32"/></svg>`
+              `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="100" height="100" fill="none" stroke="${value}"><path d="M0 .5H31.5V32"/></svg>`
             )}")`,
           }),
           'bg-grid-small': (value: any) => ({
@@ -70,7 +80,7 @@ const config: Config = {
       );
     },
   ],
-};
+} satisfies Config;
 
 function addVariablesForColors({ addBase, theme }: any) {
   let allColors = flattenColorPalette(theme('colors'));
