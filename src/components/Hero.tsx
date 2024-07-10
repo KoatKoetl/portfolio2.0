@@ -1,8 +1,8 @@
+import { TextGenerateEffect } from '@/components/ui/text-generate-effect';
 import React from 'react';
 import { FaLocationArrow } from 'react-icons/fa';
 import MagicButton from './ui/MagicButton';
 import { Spotlight } from './ui/Spotlight';
-import { TextGenerateEffect } from './ui/text-generate-effect';
 
 const Hero = () => {
   return (
