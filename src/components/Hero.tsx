@@ -1,4 +1,4 @@
-import { TextGenerateEffect } from '@/components/ui/text-generate-effect';
+import { TextGenerateEffect } from '@/components/ui/Text-generate-effect';
 import React from 'react';
 import { FaLocationArrow } from 'react-icons/fa';
 import MagicButton from './ui/MagicButton';
