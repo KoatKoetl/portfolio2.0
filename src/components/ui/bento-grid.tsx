@@ -60,8 +60,8 @@ export const BentoGridItem = ({
           {spareImg && <img src={spareImg} alt={spareImg} className={`absolute ${id === 4 && 'bottom-12 md:bottom-12 md:left-0'}`} />}
         </div>
         <div
-          className={`font-sans font-bold text-neutral-600 dark:text-neutral-200 mb-2 mt-2 ${id === 2 && 'text-xl'} 
-          ${id === 3 && 'text-xl text-wrap max-w-24 sm:max-w-max md:text-lg mb-0 mt-0'} ${
+          className={`font-sans font-bold text-neutral-600 dark:text-neutral-200 mb-2 mt-2 text-base sm:text-2xl md:text-lg lg:text-xl ${id === 2 && 'text-xl'} 
+          ${id === 3 && 'text-xl text-wrap max-w-24 sm:max-w-max md:text-4xl mb-0 mt-0 absolute z-10 md:top-24 lg:top-32'} ${
             id === 6 && 'text-xl md:text-3xl text-center md:mb-10'
           }`}
         >
@@ -81,7 +81,7 @@ export const BentoGridItem = ({
         {id === 3 && (
           <div className="flex gap-1 lg:gap-4 w-fit absolute right-3 lg:right-2">
             <div className="flex flex-col gap-3 md:gap-3 lg:gap-6">
-              {['HTMl', 'CSS', 'JavaScript', 'SCSS'].map((item, i) => (
+              {['HTML', 'CSS', 'JavaScript', 'SCSS'].map((item, i) => (
                 <span
                   key={i}
                   className="lg:py-4 lg:px-3 py-2 px-3 text-xs lg:text-base opacity-50 
@@ -92,9 +92,9 @@ export const BentoGridItem = ({
               ))}
               <span className="lg:py-7 lg:px-3 py-4 px-3 rounded-lg text-center bg-[#10132E]"></span>
             </div>
-            <div className="flex flex-col gap-3 md:gap-3 lg:gap-8">
+            <div className="flex flex-col gap-3 md:gap-3 lg:gap-4">
               <span className="lg:py-7 lg:px-3 py-4 px-3  rounded-lg text-center bg-[#10132E]"></span>
-              {['React', 'TypeScript', 'Tailwind', 'Shadcn/UI'].map((item, i) => (
+              {['React', 'TypeScript', 'Tailwind', 'Vite/Webpack'].map((item, i) => (
                 <span
                   key={i}
                   className="lg:py-4 lg:px-3 py-2 px-3 text-xs lg:text-base opacity-50 
