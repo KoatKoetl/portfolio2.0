@@ -61,7 +61,7 @@ export const BentoGridItem = ({
         </div>
         <div
           className={`font-sans font-bold text-neutral-600 dark:text-neutral-200 mb-2 mt-2 text-base sm:text-2xl md:text-lg lg:text-xl ${id === 2 && 'text-xl'} 
-          ${id === 3 && 'text-xl text-wrap max-w-24 sm:max-w-max md:text-4xl mb-0 mt-0 absolute z-10 md:top-24 lg:top-32'} ${
+          ${id === 3 && 'text-xl text-wrap max-w-24 sm:max-w-max md:text-2xl lg:text-4xl mb-0 mt-0 absolute z-10 md:top-24 lg:top-32'} ${
             id === 6 && 'text-xl md:text-3xl text-center md:mb-10'
           }`}
         >
