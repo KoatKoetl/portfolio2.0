@@ -87,6 +87,11 @@ const config: Config = {
             transform: 'translateY(-50%)',
           },
         },
+        scroll: {
+          to: {
+            transform: 'translate(calc(-50% - 0.5rem))',
+          },
+        },
       },
     },
   },
