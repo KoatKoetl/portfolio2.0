@@ -99,66 +99,48 @@ export const projects = [
 export const testimonials = [
   {
     quote:
-      "Collaborating with Adrian was an absolute pleasure. His professionalism, promptness, and dedication to delivering exceptional results were evident throughout our project. Adrian's enthusiasm for every facet of development truly stands out. If you're seeking to elevate your website and elevate your brand, Adrian is the ideal partner.",
-    name: 'Michael Johnson',
-    title: 'Director of AlphaStream Technologies',
+      'Stanislav did great work. He communicated well, and followed instructions well. I plan to hire him agian for my next wordpress project.',
+    name: 'David DuVal',
+    title: 'PHP Link Directory',
   },
   {
     quote:
-      "Collaborating with Adrian was an absolute pleasure. His professionalism, promptness, and dedication to delivering exceptional results were evident throughout our project. Adrian's enthusiasm for every facet of development truly stands out. If you're seeking to elevate your website and elevate your brand, Adrian is the ideal partner.",
-    name: 'Michael Johnson',
-    title: 'Director of AlphaStream Technologies',
+      "Working with Stanislav was a fantastic experience. Their ability to understand and implement our vision exceeded our expectations. The seamless integration and innovative solutions they provided have significantly improved our user experience. We couldn't be happier with the results.",
+    name: 'Sarah Thompson',
+    title: 'CEO of Innovatech Solutions',
   },
   {
     quote:
-      "Collaborating with Adrian was an absolute pleasure. His professionalism, promptness, and dedication to delivering exceptional results were evident throughout our project. Adrian's enthusiasm for every facet of development truly stands out. If you're seeking to elevate your website and elevate your brand, Adrian is the ideal partner.",
-    name: 'Michael Johnson',
-    title: 'Director of AlphaStream Technologies',
-  },
-  {
-    quote:
-      "Collaborating with Adrian was an absolute pleasure. His professionalism, promptness, and dedication to delivering exceptional results were evident throughout our project. Adrian's enthusiasm for every facet of development truly stands out. If you're seeking to elevate your website and elevate your brand, Adrian is the ideal partner.",
-    name: 'Michael Johnson',
-    title: 'Director of AlphaStream Technologies',
-  },
-  {
-    quote:
-      "Collaborating with Adrian was an absolute pleasure. His professionalism, promptness, and dedication to delivering exceptional results were evident throughout our project. Adrian's enthusiasm for every facet of development truly stands out. If you're seeking to elevate your website and elevate your brand, Adrian is the ideal partner.",
-    name: 'Michael Johnson',
-    title: 'Director of AlphaStream Technologies',
+      "Stanislav's expertise and attention to detail were instrumental in the success of our project. Their proactive approach and commitment to quality were evident in every aspect of their work. It's clear that they take pride in delivering top-notch results.",
+    name: 'David Mitchell',
+    title: 'CTO of TechWave Enterprises',
   },
 ];
 
 export const companies = [
   {
     id: 1,
-    name: 'cloudinary',
-    img: '/cloud.svg',
-    nameImg: '/cloudName.svg',
+    name: 'PHP link Directory',
+    img: '/phpLinkDirectory.png',
+    nameImg: '/phpLinkDirectoryTitle.png',
   },
   {
     id: 2,
-    name: 'appwrite',
-    img: '/app.svg',
-    nameImg: '/appName.svg',
+    name: 'yandex crowd',
+    img: '/yandex.svg',
+    nameImg: '/yandexTitle.svg',
   },
   {
     id: 3,
-    name: 'HOSTINGER',
-    img: '/host.svg',
-    nameImg: '/hostName.svg',
+    name: 'UpWork',
+    img: '/upwork.svg',
+    nameImg: '/upworkTitle.svg',
   },
   {
     id: 4,
-    name: 'stream',
-    img: '/s.svg',
-    nameImg: '/streamName.svg',
-  },
-  {
-    id: 5,
-    name: 'docker.',
-    img: '/dock.svg',
-    nameImg: '/dockerName.svg',
+    name: 'Chingu',
+    img: '/chingu.png',
+    nameImg: '/chinguTitle.png',
   },
 ];
 
