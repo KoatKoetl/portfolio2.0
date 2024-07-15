@@ -3,7 +3,7 @@
 ## Introduction
 
 Hello my name is stanislav and I'm Front-end Developer. I mainly use React, Tailwind, TypeScript or HTML, CSS, JavaScript. <br>
-The portfolio contain all needed info, so if you interested use the link below to check it.
+The portfolio contains all the information you need, so if you're interested, use the link below to view it.
 
 ## Preview 
 
