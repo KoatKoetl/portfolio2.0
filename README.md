@@ -1,4 +1,4 @@
-### Stanislav Front-end Web Developer Portfolio
+# Stanislav Front-end Web Developer Portfolio
 
 ## Introduction
 
