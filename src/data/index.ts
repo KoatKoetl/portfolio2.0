@@ -121,8 +121,8 @@ export const companies = [
   {
     id: 1,
     name: 'PHP link Directory',
-    img: '/phpLinkDirectory.png',
-    nameImg: '/phpLinkDirectoryTitle.png',
+    img: '/phpLinkDirectory.svg',
+    nameImg: '/phpLinkDirectoryTitle.svg',
   },
   {
     id: 2,
@@ -139,8 +139,8 @@ export const companies = [
   {
     id: 4,
     name: 'Chingu',
-    img: '/chingu.png',
-    nameImg: '/chinguTitle.png',
+    img: '/chingu.svg',
+    nameImg: '/chinguTitle.svg',
   },
 ];
 
@@ -179,13 +179,11 @@ export const socialMedia = [
   {
     id: 1,
     img: '/git.svg',
+    link: 'https://github.com/KoatKoetl',
   },
   {
     id: 2,
-    img: '/twit.svg',
-  },
-  {
-    id: 3,
     img: '/link.svg',
+    link: 'https://www.linkedin.com/in/stanislav-suschevici-a4617228a/',
   },
 ];

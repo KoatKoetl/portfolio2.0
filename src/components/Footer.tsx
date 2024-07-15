@@ -27,14 +27,13 @@ const Footer = () => {
         <p className="md:text-base text-sm md:font-normal font-light">Copyright © 2024 Stanislav</p>
 
         <div className="flex items-center md:gap-3 gap-6 mb-8">
-          {socialMedia.map(({ id, img }) => {
+          {socialMedia.map(({ id, img, link }) => {
             return (
-              <div
-                key={id}
-                className="w-10 h-10 cursor-pointer flex justify-center items-center backdrop-filter backdrop-blur-lg saturate-150 bg-opacity-75 bg-gray-900 rounded-lg border border-gray-800 hover:bg-gray-800"
-              >
-                <img src={img} alt={img} width={20} height={20} />
-              </div>
+              <a href={link} target="blank" key={id}>
+                <div className="w-10 h-10 cursor-pointer flex justify-center items-center backdrop-filter backdrop-blur-lg saturate-150 bg-opacity-75 bg-gray-900 rounded-lg border border-gray-800 hover:bg-gray-800">
+                  <img src={img} alt={img} width={20} height={20} />
+                </div>
+              </a>
             );
           })}
         </div>
