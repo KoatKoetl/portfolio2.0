@@ -1,6 +1,6 @@
 'use client';
-import { cn } from '@/utils/cn';
 import { useEffect, useRef, useState } from 'react';
+import { cn } from '../../utils/cn';
 
 export const BackgroundGradientAnimation = ({
   gradientBackgroundStart = 'rgb(108, 0, 162)',

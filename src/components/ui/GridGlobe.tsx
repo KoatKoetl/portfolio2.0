@@ -1,7 +1,6 @@
 'use client';
-import { motion } from 'framer-motion';
 import dynamic from 'next/dynamic';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 const World = dynamic(() => import('@/components/ui/Globe').then((m) => m.World), {
   ssr: false,

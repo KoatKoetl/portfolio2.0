@@ -1,9 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
-import { BackgroundGradientAnimation } from '@/components/ui/Background-gradient-animation';
-import { cn } from '@/utils/cn';
 import { useState } from 'react';
 import { IoCopyOutline } from 'react-icons/io5';
+import { cn } from '../../utils/cn';
+import { BackgroundGradientAnimation } from '../ui/Background-gradient-animation';
 import { GlobeDemo } from './GridGlobe';
 import ShimmerButton from './ShimmerButton';
 
@@ -60,7 +60,9 @@ export const BentoGridItem = ({
           {spareImg && <img src={spareImg} alt={spareImg} className={`absolute ${id === 4 && 'bottom-12 md:bottom-12 md:left-0'}`} />}
         </div>
         <div
-          className={`font-sans font-bold text-neutral-600 dark:text-neutral-200 mb-2 mt-2 text-base sm:text-2xl md:text-lg lg:text-xl ${id === 2 && 'text-xl'} 
+          className={`font-sans font-bold text-neutral-600 dark:text-neutral-200 mb-2 mt-2 text-base sm:text-2xl md:text-lg lg:text-xl ${
+            id === 2 && 'text-xl'
+          } 
           ${id === 3 && 'text-xl text-wrap max-w-24 sm:max-w-max md:text-2xl lg:text-4xl mb-0 mt-0 absolute z-10 md:top-24 lg:top-32'} ${
             id === 6 && 'text-xl md:text-3xl text-center md:mb-10'
           }`}

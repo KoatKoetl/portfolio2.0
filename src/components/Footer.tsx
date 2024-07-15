@@ -1,6 +1,6 @@
-import { socialMedia } from '@/data';
 import React from 'react';
 import { FaLocationArrow } from 'react-icons/fa';
+import { socialMedia } from '../data';
 import MagicButton from './ui/MagicButton';
 
 const Footer = () => {

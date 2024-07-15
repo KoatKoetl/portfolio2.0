@@ -1,9 +1,9 @@
 'use client';
-import { cn } from '@/utils/cn';
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'framer-motion';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { FaHome } from 'react-icons/fa';
+import { cn } from '../../utils/cn';
 
 export const FloatingNav = ({
   navItems,

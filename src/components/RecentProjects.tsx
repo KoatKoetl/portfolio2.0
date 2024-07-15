@@ -1,6 +1,6 @@
-import { projects } from '@/data';
 import React from 'react';
 import { FaLocationArrow } from 'react-icons/fa';
+import { projects } from '../data';
 import { PinContainer } from './ui/3dPin';
 
 const RecentProjects = () => {
