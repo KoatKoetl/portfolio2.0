@@ -1,4 +1,4 @@
-import { BentoGridItem } from '../components/ui/Bento-grid';
+import BentoGridItem from '../components/ui/Bento-grid';
 import { gridItems } from '../data';
 
 const Grid = () => {

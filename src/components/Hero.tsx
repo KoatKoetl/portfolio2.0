@@ -1,6 +1,6 @@
 import React from 'react';
 import { FaLocationArrow } from 'react-icons/fa';
-import { TextGenerateEffect } from '../components/ui/Text-generate-effect';
+import TextGenerateEffect from '../components/ui/Text-generate-effect';
 import MagicButton from './ui/MagicButton';
 import { Spotlight } from './ui/Spotlight';
 

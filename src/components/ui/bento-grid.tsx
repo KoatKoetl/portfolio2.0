@@ -1,5 +1,5 @@
-/* eslint-disable @next/next/no-img-element */
 'use client';
+
 import { useState } from 'react';
 import { IoCopyOutline } from 'react-icons/io5';
 import { cn } from '../../utils/cn';
@@ -7,7 +7,7 @@ import { BackgroundGradientAnimation } from '../ui/Background-gradient-animation
 import { GlobeDemo } from './GridGlobe';
 import ShimmerButton from './ShimmerButton';
 
-export const BentoGridItem = ({
+const BentoGridItem = ({
   className,
   title,
   description,
@@ -114,4 +114,5 @@ export const BentoGridItem = ({
     </div>
   );
 };
-//
+
+export default BentoGridItem;

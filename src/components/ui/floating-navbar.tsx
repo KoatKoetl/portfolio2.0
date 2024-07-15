@@ -1,4 +1,5 @@
 'use client';
+
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'framer-motion';
 import Link from 'next/link';
 import React, { useState } from 'react';

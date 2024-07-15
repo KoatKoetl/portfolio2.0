@@ -3,7 +3,7 @@ import { motion, stagger, useAnimate } from 'framer-motion';
 import { useEffect } from 'react';
 import { cn } from '../../utils/cn';
 
-export const TextGenerateEffect = ({ words, className }: { words: string; className?: string }) => {
+const TextGenerateEffect = ({ words, className }: { words: string; className?: string }) => {
   const [scope, animate] = useAnimate();
   let wordsArray = words.split(' ');
   useEffect(() => {
@@ -41,3 +41,5 @@ export const TextGenerateEffect = ({ words, className }: { words: string; classN
     </div>
   );
 };
+
+export default TextGenerateEffect;
