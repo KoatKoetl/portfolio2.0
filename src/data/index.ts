@@ -72,27 +72,35 @@ export const gridItems = [
 export const projects = [
   {
     id: 1,
-    title: 'Chess Website',
+    title: 'Fullstack E-commerce',
+    des: "Can't find where to buy or sell cars? Use our new created website MotorMatch and list your car or buy one from other users.",
+    img: '/p4.png',
+    iconLists: ['/re.svg', '/ts.svg', 'mongoDB.svg', 'redux.svg', '/tail.svg', 'nodejs.svg', 'vite.svg'],
+    link: 'https://github.com/KoatKoetl/motorMatch',
+  },
+  {
+    id: 2,
+    title: 'Landing - Chess Website',
     des: 'Explore the chess world challenges, including different tournaments.',
     img: '/p1.png',
     iconLists: ['/html.svg', '/css.svg', '/js.svg'],
     link: 'https://github.com/KoatKoetl/Chess-website',
   },
   {
-    id: 2,
-    title: 'Favorite Music Website',
-    des: "Have favorite music performer? Use the following website to add all the performer's music and listen it fully on Deezer.com",
-    img: '/p2.png',
-    iconLists: ['/re.svg', '/tail.svg', '/js.svg', 'rapidAPI.svg', 'vite.svg'],
-    link: 'https://github.com/KoatKoetl/Music-Website',
-  },
-  {
     id: 3,
-    title: 'AI Color Palette - Color Inspo',
+    title: 'Front-end App - AI Color Palette',
     des: 'The Color Inspo is an app intended to serve as a personal consultant, helping users find harmonious color combinations for various purposes.',
     img: '/p3.png',
     iconLists: ['/re.svg', '/tail.svg', '/ts.svg', '/vite.svg', '/openAI.svg'],
     link: 'https://github.com/chingu-voyages/v49-tier2-team-15',
+  },
+  {
+    id: 4,
+    title: 'Front-end App - Music Website',
+    des: "Have favorite music performer? Use the following website to add all the performer's music and listen it fully on Deezer.com",
+    img: '/p2.png',
+    iconLists: ['/re.svg', '/tail.svg', '/js.svg', 'rapidAPI.svg', 'vite.svg'],
+    link: 'https://github.com/KoatKoetl/Music-Website',
   },
 ];
 
