@@ -4,6 +4,7 @@ import { motion, useMotionValue, useReducedMotion, useSpring } from 'framer-moti
 import Image from 'next/image';
 import React, { useRef, useState } from 'react';
 import { FaLocationArrow } from 'react-icons/fa';
+import { useIsMobile } from '../../hooks/useIsMobile';
 import { format, useTranslation } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
 
@@ -84,37 +85,47 @@ export const WitcherCard = ({
   const { title, des, img, iconLists, website, category, details, period, rarity = 'blue' } = project;
   const t = useTranslation();
   const github = project.github ?? project.link;
-  const [flipped, setFlipped] = useState(false);
+    const [flipped, setFlipped] = useState(false);
   const reduce = useReducedMotion();
+  const isMobile = useIsMobile();
   const angle = flipDirection === 'right' ? 180 : -180;
   const names = iconLists.map(techName);
+  // No pointer tilt on touch/mobile viewports: taps leave the card permanently skewed.
+  const tiltEnabled = !isMobile && !reduce;
 
   // Tilt toward the hovered corner: stronger on the front, softer on the back
   const ref = useRef<HTMLDivElement>(null);
   const rx = useSpring(useMotionValue(0), { stiffness: 150, damping: 18 });
-  const ry = useSpring(useMotionValue(0), { stiffness: 150, damping: 18 });
+    const ry = useSpring(useMotionValue(0), { stiffness: 150, damping: 18 });
   const max = flipped ? 5 : 10;
   const onMove = (e: React.MouseEvent) => {
-    if (reduce || !ref.current) return;
+    if (!tiltEnabled || !ref.current) return;
     const r = ref.current.getBoundingClientRect();
     const px = (e.clientX - r.left) / r.width - 0.5;
     const py = (e.clientY - r.top) / r.height - 0.5;
     ry.set(px * 2 * max);
-    rx.set(-py * 2 * max);
+        rx.set(-py * 2 * max);
   };
-  const onLeave = () => { rx.set(0); ry.set(0); };
+    const onLeave = () => { rx.set(0); ry.set(0); };
+
+  // Rarity glow geometry: a tight rim just outside the border on desktop, and a
+  // narrower-than-the-card rim on mobile so it never eats horizontal space.
+  const glowScale = isMobile ? 'scale-x-90 scale-y-100' : 'scale-[0.99] group-hover:scale-[1.02]';
 
   return (
     <div
       ref={ref}
-      onMouseMove={onMove}
-      onMouseLeave={onLeave}
+      onMouseMove={tiltEnabled ? onMove : undefined}
+      onMouseLeave={tiltEnabled ? onLeave : undefined}
       className={cn('group relative h-[34rem] w-[min(21rem,calc(100vw-2rem))] [perspective:1400px]', className)}
     >
-      {/* Rarity glow: spreads out from behind the card on hover */}
+      {/* Rarity glow: a thin rim just outside the card's border, on hover */}
       <div
         aria-hidden
-        className="pointer-events-none absolute -inset-2 scale-90 opacity-0 blur-2xl transition duration-500 ease-out group-hover:scale-110 group-hover:opacity-80"
+        className={cn(
+          'pointer-events-none absolute -inset-1 opacity-0 blur-md transition duration-500 ease-out group-hover:opacity-90',
+          glowScale,
+        )}
       >
         <div className="h-full w-full" style={{ clipPath: PLATE, backgroundColor: RARITY[rarity] }} />
       </div>

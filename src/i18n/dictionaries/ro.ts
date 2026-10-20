@@ -33,6 +33,7 @@ export const ro: Dictionary = {
     empty: 'Momentan nu există proiecte cu această culoare.',
     showMore: 'Arată mai multe ({count})',
     showLess: 'Arată mai puțin',
+    slideTo: 'Mergi la proiectul {index}',
     rarity: {
       blue: 'albastru',
       green: 'verde',

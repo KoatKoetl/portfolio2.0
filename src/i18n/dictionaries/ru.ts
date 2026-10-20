@@ -33,6 +33,7 @@ export const ru: Dictionary = {
     empty: 'Пока нет проектов с этим цветом.',
     showMore: 'Показать ещё ({count})',
     showLess: 'Свернуть',
+    slideTo: 'Перейти к проекту {index}',
     rarity: {
       blue: 'синий',
       green: 'зелёный',
