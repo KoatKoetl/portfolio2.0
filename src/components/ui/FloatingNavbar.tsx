@@ -4,19 +4,17 @@ import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'framer-
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { FaHome } from 'react-icons/fa';
+import { useTranslation } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
 
-const FloatingNav = ({
-  navItems,
-  className,
-}: {
-  navItems: {
-    name: string;
-    link: string;
-    icon?: JSX.Element;
-  }[];
-  className?: string;
-}) => {
+/** Section anchors are language independent; only the visible labels are translated. */
+const NAV_LINKS = [
+  { key: 'projects', link: '#projects' },
+  { key: 'contact', link: '#contact' },
+] as const;
+
+const FloatingNav = ({ className }: { className?: string }) => {
+  const t = useTranslation();
   const { scrollYProgress } = useScroll();
 
   const [visible, setVisible] = useState(false);
@@ -56,21 +54,24 @@ const FloatingNav = ({
           className
         )}
       >
-        <a href="/" className="px-8 sm:px-2 py-1 text-neutral-600 dark:text-black dark:hover:text-purple-500 hover:text-black">
+                <a
+          href="/"
+          aria-label={t.nav.home}
+          className="px-8 sm:px-2 py-1 text-neutral-600 dark:text-black dark:hover:text-purple-500 hover:text-black"
+        >
           <button type="button" className="flex justify-center items-center">
             <FaHome />
           </button>
         </a>
-        {navItems.map((navItem: any, idx: number) => (
+        {NAV_LINKS.map((navItem) => (
           <Link
-            key={`link=${idx}`}
+            key={navItem.link}
             href={navItem.link}
             className={cn(
               'relative dark:text-black items-center space-x-1 text-text-black dark:hover:text-purple-500 hover:text-black hidden sm:flex'
             )}
           >
-            <span className="block">{navItem.icon}</span>
-            <span className="block text-sm">{navItem.name}</span>
+            <span className="block text-sm">{t.nav[navItem.key]}</span>
           </Link>
         ))}
       </motion.div>

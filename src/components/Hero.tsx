@@ -1,10 +1,15 @@
+'use client';
+
 import React from 'react';
 import { FaLocationArrow } from 'react-icons/fa';
+import { useTranslation } from '../i18n/I18nProvider';
 import MagicButton from './ui/MagicButton';
 import { Spotlight } from './ui/Spotlight';
 import TextGenerateEffect from './ui/TextGenerateEffect';
 
 const Hero = () => {
+  const t = useTranslation();
+
   return (
     <div className="pb-20  pt-36">
       <div>
@@ -18,16 +23,20 @@ const Hero = () => {
 
         <div className="flex justify-center">
           <div className="max-w-[89vw] md:max-w-2xl lg:max-w-[60vw] flex flex-col items-center justify-center">
-            <TextGenerateEffect className="text-center text-[40px] md:text-5xl lg:text-6xl" words="Transforming Ideas into Real Products" />
+                        <TextGenerateEffect
+              className="text-center text-[40px] md:text-5xl lg:text-6xl"
+              words={t.hero.title}
+              accentFrom={t.hero.titleAccentFrom}
+            />
 
             <h1>
               <p className="text-center md:tracking-wider mb-4 md:text-lg lg:text-2xl text-black-100">
-                Hello, I&apos;m Stanislav, a Web developer based in Moldova.
+                {t.hero.subtitle}
               </p>
             </h1>
 
             <a href="#projects">
-              <MagicButton title="Show my works" icon={<FaLocationArrow />} position="right" />
+              <MagicButton title={t.hero.cta} icon={<FaLocationArrow />} position="right" />
             </a>
           </div>
         </div>

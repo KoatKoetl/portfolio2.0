@@ -4,6 +4,7 @@ import { motion, useMotionValue, useReducedMotion, useSpring } from 'framer-moti
 import Image from 'next/image';
 import React, { useRef, useState } from 'react';
 import { FaLocationArrow } from 'react-icons/fa';
+import { format, useTranslation } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
 
 export type Rarity = 'blue' | 'green' | 'orange' | 'red';
@@ -81,6 +82,7 @@ export const WitcherCard = ({
   className?: string;
 }) => {
   const { title, des, img, iconLists, website, category, details, period, rarity = 'blue' } = project;
+  const t = useTranslation();
   const github = project.github ?? project.link;
   const [flipped, setFlipped] = useState(false);
   const reduce = useReducedMotion();
@@ -142,7 +144,7 @@ export const WitcherCard = ({
                     href={website}
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label={`Open ${title} website`}
+                    aria-label={format(t.card.openWebsite, { title })}
                     tabIndex={flipped ? -1 : 0}
                     className="group/img block h-full w-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-violet-600"
                   >
@@ -197,7 +199,7 @@ export const WitcherCard = ({
                 className="bg-violet-600 py-2.5 text-sm font-bold text-white transition hover:bg-purple-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-600"
                 style={{ clipPath: HEX }}
               >
-                Show more
+                {t.card.showMore}
               </button>
             </div>
           </Plate>
@@ -216,14 +218,14 @@ export const WitcherCard = ({
 
               <div className="flex-1 space-y-3 overflow-y-auto pr-2 text-sm leading-relaxed text-black-100 [scrollbar-width:thin] [scrollbar-color:#a855f7_transparent] [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-purple-500">
                 <section>
-                  <h4 className="mb-1 text-xs font-bold text-purple-500">About the project</h4>
+                  <h4 className="mb-1 text-xs font-bold text-purple-500">{t.card.about}</h4>
                   <p>{des}</p>
                 </section>
                 {details && details.length > 0 && (
                   <>
                     <Divider />
                     <section>
-                      <h4 className="mb-1.5 text-xs font-bold text-purple-500">What I did</h4>
+                      <h4 className="mb-1.5 text-xs font-bold text-purple-500">{t.card.whatIDid}</h4>
                       <ul className="space-y-1.5">
                         {details.map((d, i) => (
                           <li key={i} className="flex gap-2">
@@ -240,7 +242,7 @@ export const WitcherCard = ({
               <Divider />
 
               <div>
-                <p className="mb-1.5 text-center text-xs font-bold text-purple-500">Tech stack</p>
+                <p className="mb-1.5 text-center text-xs font-bold text-purple-500">{t.card.techStack}</p>
                 <ul className="flex flex-wrap justify-center gap-1.5">
                   {names.map((n, i) => (
                     <li key={n + i} className="rounded-full border border-black/10 bg-white px-2.5 py-0.5 text-xs text-black-100">
@@ -258,7 +260,7 @@ export const WitcherCard = ({
                   className="border border-purple-500 bg-white px-5 py-2 text-sm font-bold text-purple-500 transition hover:bg-purple-500 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-violet-600"
                   style={{ clipPath: HEX }}
                 >
-                  Back
+                  {t.card.back}
                 </button>
                 {github && (
                   <a
@@ -268,7 +270,7 @@ export const WitcherCard = ({
                     tabIndex={flipped ? 0 : -1}
                     className="flex items-center text-sm text-purple-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-violet-600"
                   >
-                    Check GitHub
+                    {t.card.github}
                     <FaLocationArrow className="ms-3" color="#7c3aed" />
                   </a>
                 )}

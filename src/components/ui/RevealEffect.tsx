@@ -2,47 +2,41 @@
 import React from 'react';
 
 import { AnimatePresence, motion } from 'framer-motion';
+import { useTranslation } from '../../i18n/I18nProvider';
 import { CanvasRevealEffect } from '../../components/ui/RevealEffectCanvas';
 
+/** Visual effect per approach phase, index aligned with the translated cards. */
+const PHASE_EFFECTS: React.ReactNode[] = [
+  <CanvasRevealEffect key="phase-1" animationSpeed={5.1} containerClassName="bg-emerald-900" />,
+  <CanvasRevealEffect
+    key="phase-2"
+    animationSpeed={3}
+    containerClassName="bg-black"
+    colors={[
+      [236, 72, 153],
+      [232, 121, 249],
+    ]}
+    dotSize={2}
+  />,
+  <CanvasRevealEffect key="phase-3" animationSpeed={3} containerClassName="bg-sky-600" colors={[[125, 211, 252]]} />,
+];
+
 export function CanvasRevealEffectDemo() {
+  const t = useTranslation();
+
   return (
     <>
       <div className="md:py-20 flex flex-col lg:flex-row items-center justify-center gap-4">
-        <Card
-          title="Planning & Strategy"
-          icon={<AceternityIcon order="Phase 1" />}
-          description="We'll collaborate to map out your website's goals, target audience, 
-          and key functionalities. We'll discuss things like site structure, 
-          navigation, and content requirements."
-        >
-          <CanvasRevealEffect animationSpeed={5.1} containerClassName="bg-emerald-900" />
-        </Card>
-        <Card
-          title="Development & Progress Update"
-          icon={<AceternityIcon order="Phase 2" />}
-          description="Once we agree on the plan, I cue my coding playlist and dive into
-          coding. From initial sketches to polished code, I keep you updated
-          all the way."
-        >
-          <CanvasRevealEffect
-            animationSpeed={3}
-            containerClassName="bg-black"
-            colors={[
-              [236, 72, 153],
-              [232, 121, 249],
-            ]}
-            dotSize={2}
-          />
-        </Card>
-        <Card
-          title="Development & Launch"
-          icon={<AceternityIcon order="Phase 3" />}
-          description="This is where the magic happens! Based on the approved design, 
-          I'll translate everything into functional code, building your website
-          from the ground up."
-        >
-          <CanvasRevealEffect animationSpeed={3} containerClassName="bg-sky-600" colors={[[125, 211, 252]]} />
-        </Card>
+        {t.approach.cards.map((card, index) => (
+          <Card
+            key={card.title}
+            title={card.title}
+            icon={<AceternityIcon order={t.approach.phases[index] ?? ''} />}
+            description={card.description}
+          >
+            {PHASE_EFFECTS[index] ?? PHASE_EFFECTS[0]}
+          </Card>
+        ))}
       </div>
     </>
   );
