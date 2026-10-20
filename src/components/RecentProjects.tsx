@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useIsMobile } from '../hooks/useIsMobile';
 import { format, useTranslation } from '../i18n/I18nProvider';
 import { useProjects } from '../i18n/useProjects';
 import { RARITY, Rarity, WitcherCard } from './ui/WitcherCard';
@@ -14,19 +15,9 @@ const SORT_ORDER: Sort[] = ['default', 'easiest', 'hardest'];
 
 const PAGE_DESKTOP = 6;
 const PAGE_MOBILE = 3;
+// How close (px) to the slider's right edge triggers loading the next batch on mobile
+const AUTO_LOAD_THRESHOLD = 120;
 
-// Mobile = below Tailwind's md breakpoint (768px)
-const useIsMobile = () => {
-  const [mobile, setMobile] = useState(false);
-  useEffect(() => {
-    const mq = window.matchMedia('(max-width: 767px)');
-    const update = () => setMobile(mq.matches);
-    update();
-    mq.addEventListener('change', update);
-    return () => mq.removeEventListener('change', update);
-  }, []);
-  return mobile;
-};
 
 // Add above RecentProjects
 const RarityHint = () => {
@@ -102,11 +93,26 @@ const RecentProjects = () => {
   const projects = useProjects();
   const [sort, setSort] = useState<Sort>('default');
   const [selected, setSelected] = useState<Rarity[]>([]); // empty = show all
-  const [pages, setPages] = useState(1);
+    const [pages, setPages] = useState(1);
   const [active, setActive] = useState(0); // current slide on mobile
   const sliderRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const autoLoadLock = useRef(false); // one auto-load per rendered batch
+  const restoreScroll = useRef(false);
   const isMobile = useIsMobile();
   const pageSize = isMobile ? PAGE_MOBILE : PAGE_DESKTOP;
+
+  // Re-arm the auto-loader whenever the rendered batch changes.
+  useEffect(() => {
+    autoLoadLock.current = false;
+  }, [pages, pageSize]);
+
+  // Collapsing the list shrinks the page and pushes the section away: bring it back.
+  useEffect(() => {
+    if (!restoreScroll.current) return;
+    restoreScroll.current = false;
+    sectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, [pages]);
 
   const toggle = (l: Rarity) => {
     setSelected((cur) => (cur.includes(l) ? cur.filter((x) => x !== l) : [...cur, l]));
@@ -132,10 +138,36 @@ const RecentProjects = () => {
   const visible = list.slice(0, pages * pageSize);
   const remaining = list.length - visible.length;
 
-  const onSlide = () => {
+    const onSlide = () => {
     const el = sliderRef.current;
     if (!el || visible.length === 0) return;
     setActive(Math.round(el.scrollLeft / (el.scrollWidth / visible.length)));
+
+    // Auto-load the next batch instead of making the user press "Show more".
+    if (autoLoadLock.current || remaining <= 0) return;
+    const distanceToEnd = el.scrollWidth - el.clientWidth - el.scrollLeft;
+    if (distanceToEnd > AUTO_LOAD_THRESHOLD) return;
+    autoLoadLock.current = true;
+    setPages((n) => n + 1);
+  };
+
+    const collapse = () => {
+    restoreScroll.current = true;
+    setPages(1);
+  };
+
+  /** Centre the slider on the card at `index` (mobile dots). */
+  const goToSlide = (index: number) => {
+    const el = sliderRef.current;
+    const card = el?.children[index] as HTMLElement | undefined;
+    if (!el || !card) return;
+    const trackLeft = el.getBoundingClientRect().left;
+    const left =
+      el.scrollLeft +
+      (card.getBoundingClientRect().left - trackLeft) -
+      (el.clientWidth - card.clientWidth) / 2;
+    el.scrollTo({ left, behavior: 'smooth' });
+    setActive(index);
   };
 
   const cards = visible.map((p, i) => (
@@ -152,9 +184,12 @@ const RecentProjects = () => {
     </motion.div>
   ));
 
+      // Pager is desktop-only: on mobile the slider auto-loads as you swipe.
+  const hasPager = !isMobile && (remaining > 0 || pages > 1);
+
   return (
-    <div className="py-20 bg-white" id="projects">
-            <h2 className="heading text-black-100">
+    <div ref={sectionRef} className="py-20 bg-white scroll-mt-24" id="projects">
+      <h2 className="heading text-black-100">
         {t.projects.headingLead} <span className="text-purple-500">{t.projects.headingAccent}</span>
       </h2>
 
@@ -223,13 +258,24 @@ const RecentProjects = () => {
           >
             <AnimatePresence mode="popLayout">{cards}</AnimatePresence>
           </div>
-          {visible.length > 1 && (
-            <div className="flex justify-center gap-1.5" aria-hidden>
+                    {visible.length > 1 && (
+            <div className="flex items-center justify-center gap-1.5">
               {visible.map((p, i) => (
-                <span
+                <button
                   key={p.id}
-                  className={'h-2 rounded-full transition-all ' + (i === active ? 'w-5 bg-violet-600' : 'w-2 bg-black/10')}
-                />
+                  type="button"
+                  onClick={() => goToSlide(i)}
+                  aria-label={format(t.projects.slideTo, { index: i + 1 })}
+                  aria-current={i === active}
+                  className="flex h-6 items-center rounded-full px-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-600"
+                >
+                  <span
+                    className={
+                      'h-2 rounded-full transition-all ' +
+                      (i === active ? 'w-5 bg-violet-600' : 'w-2 bg-black/10 hover:bg-black/30')
+                    }
+                  />
+                </button>
               ))}
             </div>
           )}
@@ -244,8 +290,8 @@ const RecentProjects = () => {
         <p className="mt-10 text-center text-black-100">{t.projects.empty}</p>
       )}
 
-      {/* Show more / less */}
-      {list.length > pageSize && (
+            {/* Show more / less: desktop only */}
+      {hasPager && (
         <div className="mt-8 flex justify-center gap-3">
           {remaining > 0 && (
             <button
@@ -259,7 +305,7 @@ const RecentProjects = () => {
           {pages > 1 && (
             <button
               type="button"
-              onClick={() => setPages(1)}
+              onClick={collapse}
               className="rounded-full border border-purple-500 bg-white px-6 py-2 text-sm font-bold text-purple-500 transition hover:bg-purple-500 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-600"
             >
               {t.projects.showLess}

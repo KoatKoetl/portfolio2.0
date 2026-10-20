@@ -32,6 +32,7 @@ export const en = {
     empty: 'No projects with this color yet.',
     showMore: 'Show more ({count})',
     showLess: 'Show less',
+    slideTo: 'Go to project {index}',
     rarity: {
       blue: 'blue',
       green: 'green',
