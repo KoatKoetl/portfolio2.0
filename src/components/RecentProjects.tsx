@@ -31,6 +31,73 @@ const useIsMobile = () => {
   return mobile;
 };
 
+// Add above RecentProjects
+const RarityHint = () => {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLSpanElement>(null);
+  const pointer = useRef<string>('mouse');
+
+  useEffect(() => {
+    if (!open) return;
+    const onDown = (e: PointerEvent) => {
+      if (!ref.current?.contains(e.target as Node)) setOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false);
+    document.addEventListener('pointerdown', onDown);
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('pointerdown', onDown);
+      document.removeEventListener('keydown', onKey);
+    };
+  }, [open]);
+
+  return (
+    <span
+      ref={ref}
+      className="relative inline-flex"
+      onPointerEnter={(e) => {
+        pointer.current = e.pointerType;
+        if (e.pointerType === 'mouse') setOpen(true);
+      }}
+      onPointerLeave={(e) => e.pointerType === 'mouse' && setOpen(false)}
+    >
+      <button
+        type="button"
+        aria-expanded={open}
+        aria-describedby="rarity-hint"
+        onClick={() => setOpen((o) => (pointer.current === 'mouse' ? true : !o))}
+        onFocus={() => setOpen(true)}
+        className="flex items-center gap-1.5 text-sm text-black-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-600"
+      >
+        Filter by rarity
+        <span
+          aria-hidden
+          className="flex h-4 w-4 items-center justify-center rounded-full border border-black/30 text-[10px] font-bold leading-none"
+        >
+          i
+        </span>
+      </button>
+
+      <AnimatePresence>
+        {open && (
+          <motion.span
+            id="rarity-hint"
+            role="tooltip"
+            initial={{ opacity: 0, y: -4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -4 }}
+            transition={{ duration: 0.15 }}
+            className="absolute left-1/2 top-full z-20 mt-2 w-64 -translate-x-1/2 rounded-lg bg-black-100 px-3 py-2 text-center text-xs leading-snug text-white shadow-lg"
+          >
+            Rarity shows how hard the project was <b>for me</b> to build, based on my own
+            experience. It&apos;s not a measure of how big or complex the project is overall.
+          </motion.span>
+        )}
+      </AnimatePresence>
+    </span>
+  );
+};
+
 const RecentProjects = () => {
   const [sort, setSort] = useState<Sort>('default');
   const [selected, setSelected] = useState<Rarity[]>([]); // empty = show all
@@ -93,7 +160,7 @@ const RecentProjects = () => {
       {/* Filter + sort by difficulty */}
       <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-8">
         <div className="flex items-center gap-3">
-          <span className="text-sm text-black-100">Filter by rarity</span>
+          <RarityHint />
           <div role="group" aria-label="Filter projects by difficulty color" className="flex items-center gap-2">
             {LEVELS.map((l) => {
               const on = selected.includes(l);
