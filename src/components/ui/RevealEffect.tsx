@@ -64,12 +64,12 @@ const Card = ({
     <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="border border-black/[0.2] group/canvas-card flex items-center justify-center dark:border-white/[0.2]  sm:max-w-2xl w-full mx-auto p-4 relative sm:h-[15rem] md:h-[25rem] lg:h-[35rem]"
+      className="border border-black/[0.2] group/canvas-card flex items-center justify-center dark:border-purple-500/[0.2]  sm:max-w-2xl w-full mx-auto p-4 relative sm:h-[15rem] md:h-[25rem] lg:h-[35rem]"
     >
-      <Icon className="absolute h-6 w-6 -top-3 -left-3 dark:text-white text-black" />
-      <Icon className="absolute h-6 w-6 -bottom-3 -left-3 dark:text-white text-black" />
-      <Icon className="absolute h-6 w-6 -top-3 -right-3 dark:text-white text-black" />
-      <Icon className="absolute h-6 w-6 -bottom-3 -right-3 dark:text-white text-black" />
+      <Icon className="absolute h-6 w-6 -top-3 -left-3 dark:text-purple-500 text-black" />
+      <Icon className="absolute h-6 w-6 -bottom-3 -left-3 dark:text-purple-500 text-black" />
+      <Icon className="absolute h-6 w-6 -top-3 -right-3 dark:text-purple-500 text-black" />
+      <Icon className="absolute h-6 w-6 -bottom-3 -right-3 dark:text-purple-500 text-black" />
 
       <AnimatePresence>
         {hovered && (
@@ -102,7 +102,7 @@ const AceternityIcon = ({ order }: { order: string }) => {
     <div>
       <button className="relative inline-flex h-12 overflow-hidden rounded-lg p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
         <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
-        <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-lg bg-slate-950 px-5 py-1 text-2xl font-bold text-purple-200 backdrop-blur-3xl">
+        <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-lg bg-white px-5 py-1 text-2xl font-bold text-purple-500 backdrop-blur-3xl">
           {order}
         </span>
       </button>

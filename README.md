@@ -1,8 +1,8 @@
-# Stanislav Front-end Web Developer Portfolio
+# Stanislav Web Web Developer Portfolio
 
 ## Introduction
 
-Hello my name is stanislav and I'm Front-end Developer. I mainly use React, Tailwind, TypeScript or HTML, CSS, JavaScript. <br>
+Hello my name is Stanislav and I'm Web Developer. I mainly use React, Tailwind, TypeScript or HTML, CSS, JavaScript. <br>
 The portfolio contains all the information you need, so if you're interested, use the link below to view it.
 
 ## Preview 

@@ -24,7 +24,7 @@ const TextGenerateEffect = ({ words, className }: { words: string; className?: s
       <motion.div ref={scope}>
         {wordsArray.map((word, idx) => {
           return (
-            <motion.span key={word + idx} className={`${idx > 3 ? 'text-purple-50' : 'dark:text-white text-black'} opacity-0`}>
+            <motion.span key={word + idx} className={`${idx > 3 ? 'text-purple-400' : 'dark:text-black text-black'} opacity-0`}>
               {word}{' '}
             </motion.span>
           );
