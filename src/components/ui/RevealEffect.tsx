@@ -2,47 +2,41 @@
 import React from 'react';
 
 import { AnimatePresence, motion } from 'framer-motion';
+import { useTranslation } from '../../i18n/I18nProvider';
 import { CanvasRevealEffect } from '../../components/ui/RevealEffectCanvas';
 
+/** Visual effect per approach phase, index aligned with the translated cards. */
+const PHASE_EFFECTS: React.ReactNode[] = [
+  <CanvasRevealEffect key="phase-1" animationSpeed={5.1} containerClassName="bg-emerald-900" />,
+  <CanvasRevealEffect
+    key="phase-2"
+    animationSpeed={3}
+    containerClassName="bg-black"
+    colors={[
+      [236, 72, 153],
+      [232, 121, 249],
+    ]}
+    dotSize={2}
+  />,
+  <CanvasRevealEffect key="phase-3" animationSpeed={3} containerClassName="bg-sky-600" colors={[[125, 211, 252]]} />,
+];
+
 export function CanvasRevealEffectDemo() {
+  const t = useTranslation();
+
   return (
     <>
       <div className="md:py-20 flex flex-col lg:flex-row items-center justify-center gap-4">
-        <Card
-          title="Planning & Strategy"
-          icon={<AceternityIcon order="Phase 1" />}
-          description="We'll collaborate to map out your website's goals, target audience, 
-          and key functionalities. We'll discuss things like site structure, 
-          navigation, and content requirements."
-        >
-          <CanvasRevealEffect animationSpeed={5.1} containerClassName="bg-emerald-900" />
-        </Card>
-        <Card
-          title="Development & Progress Update"
-          icon={<AceternityIcon order="Phase 2" />}
-          description="Once we agree on the plan, I cue my coding playlist and dive into
-          coding. From initial sketches to polished code, I keep you updated
-          all the way."
-        >
-          <CanvasRevealEffect
-            animationSpeed={3}
-            containerClassName="bg-black"
-            colors={[
-              [236, 72, 153],
-              [232, 121, 249],
-            ]}
-            dotSize={2}
-          />
-        </Card>
-        <Card
-          title="Development & Launch"
-          icon={<AceternityIcon order="Phase 3" />}
-          description="This is where the magic happens! Based on the approved design, 
-          I'll translate everything into functional code, building your website
-          from the ground up."
-        >
-          <CanvasRevealEffect animationSpeed={3} containerClassName="bg-sky-600" colors={[[125, 211, 252]]} />
-        </Card>
+        {t.approach.cards.map((card, index) => (
+          <Card
+            key={card.title}
+            title={card.title}
+            icon={<AceternityIcon order={t.approach.phases[index] ?? ''} />}
+            description={card.description}
+          >
+            {PHASE_EFFECTS[index] ?? PHASE_EFFECTS[0]}
+          </Card>
+        ))}
       </div>
     </>
   );
@@ -64,12 +58,12 @@ const Card = ({
     <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="border border-black/[0.2] group/canvas-card flex items-center justify-center dark:border-white/[0.2]  sm:max-w-2xl w-full mx-auto p-4 relative sm:h-[15rem] md:h-[25rem] lg:h-[35rem]"
+      className="border border-black/[0.2] group/canvas-card flex items-center justify-center dark:border-purple-500/[0.2]  sm:max-w-2xl w-full mx-auto p-4 relative sm:h-[15rem] md:h-[25rem] lg:h-[35rem]"
     >
-      <Icon className="absolute h-6 w-6 -top-3 -left-3 dark:text-white text-black" />
-      <Icon className="absolute h-6 w-6 -bottom-3 -left-3 dark:text-white text-black" />
-      <Icon className="absolute h-6 w-6 -top-3 -right-3 dark:text-white text-black" />
-      <Icon className="absolute h-6 w-6 -bottom-3 -right-3 dark:text-white text-black" />
+      <Icon className="absolute h-6 w-6 -top-3 -left-3 dark:text-purple-500 text-black" />
+      <Icon className="absolute h-6 w-6 -bottom-3 -left-3 dark:text-purple-500 text-black" />
+      <Icon className="absolute h-6 w-6 -top-3 -right-3 dark:text-purple-500 text-black" />
+      <Icon className="absolute h-6 w-6 -bottom-3 -right-3 dark:text-purple-500 text-black" />
 
       <AnimatePresence>
         {hovered && (
@@ -102,7 +96,7 @@ const AceternityIcon = ({ order }: { order: string }) => {
     <div>
       <button className="relative inline-flex h-12 overflow-hidden rounded-lg p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
         <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
-        <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-lg bg-slate-950 px-5 py-1 text-2xl font-bold text-purple-200 backdrop-blur-3xl">
+        <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-lg bg-white px-5 py-1 text-2xl font-bold text-purple-500 backdrop-blur-3xl">
           {order}
         </span>
       </button>

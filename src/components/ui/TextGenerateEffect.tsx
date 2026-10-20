@@ -3,11 +3,24 @@ import { motion, stagger, useAnimate } from 'framer-motion';
 import { useEffect } from 'react';
 import { cn } from '../../utils/cn';
 
-const TextGenerateEffect = ({ words, className }: { words: string; className?: string }) => {
-  const [scope, animate] = useAnimate();
-  let wordsArray = words.split(' ');
+const TextGenerateEffect = ({
+  words,
+  className,
+  accentFrom = 4,
+}: {
+  words: string;
+  className?: string;
+  /** Words at or after this index render in purple. */
+  accentFrom?: number;
+}) => {
+    const [scope, animate] = useAnimate();
+  const wordsArray = words.split(' ');
+
+  // Re-runs on locale change: the spans are re-created (their keys change), so they
+  // start hidden again and must be animated by the new effect run.
   useEffect(() => {
-    animate(
+    if (!scope.current) return;
+    const controls = animate(
       'span',
       {
         opacity: 1,
@@ -17,14 +30,19 @@ const TextGenerateEffect = ({ words, className }: { words: string; className?: s
         delay: stagger(0.2),
       }
     );
-  }, [animate]);
 
-  const renderWords = () => {
+    return () => controls.stop();
+  }, [animate, scope, words]);
+
+    const renderWords = () => {
     return (
       <motion.div ref={scope}>
         {wordsArray.map((word, idx) => {
           return (
-            <motion.span key={word + idx} className={`${idx > 3 ? 'text-purple-50' : 'dark:text-white text-black'} opacity-0`}>
+            <motion.span
+              key={`${idx}-${word}`}
+              className={`${idx >= accentFrom ? 'text-purple-400' : 'dark:text-black text-black'} opacity-0`}
+            >
               {word}{' '}
             </motion.span>
           );

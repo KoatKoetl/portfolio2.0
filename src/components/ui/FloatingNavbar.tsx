@@ -4,19 +4,17 @@ import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'framer-
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { FaHome } from 'react-icons/fa';
+import { useTranslation } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
 
-const FloatingNav = ({
-  navItems,
-  className,
-}: {
-  navItems: {
-    name: string;
-    link: string;
-    icon?: JSX.Element;
-  }[];
-  className?: string;
-}) => {
+/** Section anchors are language independent; only the visible labels are translated. */
+const NAV_LINKS = [
+  { key: 'projects', link: '#projects' },
+  { key: 'contact', link: '#contact' },
+] as const;
+
+const FloatingNav = ({ className }: { className?: string }) => {
+  const t = useTranslation();
   const { scrollYProgress } = useScroll();
 
   const [visible, setVisible] = useState(false);
@@ -52,25 +50,28 @@ const FloatingNav = ({
           duration: 0.2,
         }}
         className={cn(
-          'flex max-w-fit fixed top-3 sm:top-10 inset-x-0 mx-auto border rounded-xl shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)] z-[5000] py-2 px-4 sm:px-10 sm:py-5 items-center justify-center space-x-4 border-white/[0.2] bg-black-100',
+          'flex max-w-fit fixed top-3 sm:top-10 inset-x-0 mx-auto border rounded-xl shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)] z-[5000] py-2 px-4 sm:px-10 sm:py-5 items-center justify-center space-x-4 border-white/[0.2] bg-white',
           className
         )}
       >
-        <a href="/" className="px-8 sm:px-2 py-1 text-neutral-600 dark:text-neutral-50 dark:hover:text-neutral-300 hover:text-neutral-500">
+                <a
+          href="/"
+          aria-label={t.nav.home}
+          className="px-8 sm:px-2 py-1 text-neutral-600 dark:text-black dark:hover:text-purple-500 hover:text-black"
+        >
           <button type="button" className="flex justify-center items-center">
             <FaHome />
           </button>
         </a>
-        {navItems.map((navItem: any, idx: number) => (
+        {NAV_LINKS.map((navItem) => (
           <Link
-            key={`link=${idx}`}
+            key={navItem.link}
             href={navItem.link}
             className={cn(
-              'relative dark:text-neutral-50 items-center space-x-1 text-neutral-600 dark:hover:text-neutral-300 hover:text-neutral-500 hidden sm:flex'
+              'relative dark:text-black items-center space-x-1 text-text-black dark:hover:text-purple-500 hover:text-black hidden sm:flex'
             )}
           >
-            <span className="block">{navItem.icon}</span>
-            <span className="block text-sm">{navItem.name}</span>
+            <span className="block text-sm">{t.nav[navItem.key]}</span>
           </Link>
         ))}
       </motion.div>

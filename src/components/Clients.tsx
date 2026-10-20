@@ -6,7 +6,7 @@ import { InfiniteMovingCards } from './ui/InfiniteMovingCards';
 const Clients = () => {
   return (
     <div className="py-20" id="testimonials">
-      <h2 className="heading lg:mb-4">
+      <h2 className="heading lg:mb-4 text-black-100">
         Kind words from <span className="text-purple-500">satisfied clients</span>
       </h2>
       <div className="flex flex-col items-center max-lg:mt-10">
