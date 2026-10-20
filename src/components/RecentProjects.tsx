@@ -2,18 +2,15 @@
 
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { projects } from '../data';
+import { format, useTranslation } from '../i18n/I18nProvider';
+import { useProjects } from '../i18n/useProjects';
 import { RARITY, Rarity, WitcherCard } from './ui/WitcherCard';
 
 // Difficulty scale, easiest to hardest
 const LEVELS: Rarity[] = ['blue', 'green', 'orange', 'red'];
 
 type Sort = 'default' | 'easiest' | 'hardest';
-const OPTIONS: { value: Sort; label: string }[] = [
-  { value: 'default', label: 'Default' },
-  { value: 'easiest', label: 'Easiest first' },
-  { value: 'hardest', label: 'Hardest first' },
-];
+const SORT_ORDER: Sort[] = ['default', 'easiest', 'hardest'];
 
 const PAGE_DESKTOP = 6;
 const PAGE_MOBILE = 3;
@@ -33,6 +30,7 @@ const useIsMobile = () => {
 
 // Add above RecentProjects
 const RarityHint = () => {
+  const t = useTranslation();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLSpanElement>(null);
   const pointer = useRef<string>('mouse');
@@ -61,7 +59,7 @@ const RarityHint = () => {
       }}
       onPointerLeave={(e) => e.pointerType === 'mouse' && setOpen(false)}
     >
-      <button
+                  <button
         type="button"
         aria-expanded={open}
         aria-describedby="rarity-hint"
@@ -69,7 +67,7 @@ const RarityHint = () => {
         onFocus={() => setOpen(true)}
         className="flex items-center gap-1.5 text-sm text-black-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-600"
       >
-        Filter by rarity
+        {t.projects.filterLabel}
         <span
           aria-hidden
           className="flex h-4 w-4 items-center justify-center rounded-full border border-black/30 text-[10px] font-bold leading-none"
@@ -88,9 +86,10 @@ const RarityHint = () => {
             exit={{ opacity: 0, y: -4 }}
             transition={{ duration: 0.15 }}
             className="absolute left-1/2 top-full z-20 mt-2 w-64 -translate-x-1/2 rounded-lg bg-black-100 px-3 py-2 text-center text-xs leading-snug text-white shadow-lg"
-          >
-            Rarity shows how hard the project was <b>for me</b> to build, based on my own
-            experience. It&apos;s not a measure of how big or complex the project is overall.
+                    >
+            {t.projects.rarityTooltip.before}
+            <b>{t.projects.rarityTooltip.emphasis}</b>
+            {t.projects.rarityTooltip.after}
           </motion.span>
         )}
       </AnimatePresence>
@@ -99,6 +98,8 @@ const RarityHint = () => {
 };
 
 const RecentProjects = () => {
+  const t = useTranslation();
+  const projects = useProjects();
   const [sort, setSort] = useState<Sort>('default');
   const [selected, setSelected] = useState<Rarity[]>([]); // empty = show all
   const [pages, setPages] = useState(1);
@@ -119,14 +120,14 @@ const RecentProjects = () => {
   const list = useMemo(() => {
     // Default order comes from `order` in the data (lower = first, missing = last)
     const all = [...projects].sort((a, b) => (a.order ?? 9999) - (b.order ?? 9999));
-    const items = selected.length ? all.filter((p) => selected.includes(p.rarity)) : all;
+    const items = selected.length ? all.filter((p) => selected.includes(p.rarity ?? 'blue')) : all;
     if (sort === 'default') return items;
     const dir = sort === 'easiest' ? 1 : -1;
     // stable sort: projects with the same color keep their `order`
     return [...items].sort(
       (a, b) => dir * (LEVELS.indexOf(a.rarity ?? 'blue') - LEVELS.indexOf(b.rarity ?? 'blue')),
     );
-  }, [sort, selected]);
+  }, [sort, selected, projects]);
 
   const visible = list.slice(0, pages * pageSize);
   const remaining = list.length - visible.length;
@@ -153,15 +154,15 @@ const RecentProjects = () => {
 
   return (
     <div className="py-20 bg-white" id="projects">
-      <h2 className="heading text-black-100">
-        A small selection of <span className="text-purple-500">recent projects</span>
+            <h2 className="heading text-black-100">
+        {t.projects.headingLead} <span className="text-purple-500">{t.projects.headingAccent}</span>
       </h2>
 
       {/* Filter + sort by difficulty */}
       <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-8">
         <div className="flex items-center gap-3">
           <RarityHint />
-          <div role="group" aria-label="Filter projects by difficulty color" className="flex items-center gap-2">
+          <div role="group" aria-label={t.projects.filterAria} className="flex items-center gap-2">
             {LEVELS.map((l) => {
               const on = selected.includes(l);
               return (
@@ -169,8 +170,8 @@ const RecentProjects = () => {
                   key={l}
                   type="button"
                   aria-pressed={on}
-                  aria-label={l}
-                  title={l}
+                  aria-label={t.projects.rarity[l]}
+                  title={t.projects.rarity[l]}
                   onClick={() => toggle(l)}
                   className={
                     'h-6 w-6 rounded-full border-2 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-600 ' +
@@ -185,15 +186,15 @@ const RecentProjects = () => {
                 type="button"
                 onClick={clear}
                 className="ms-1 text-sm text-purple-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-violet-600"
-              >
-                Show all
+                            >
+                {t.projects.showAll}
               </button>
             )}
           </div>
         </div>
 
-        <div role="group" aria-label="Sort projects by difficulty" className="flex gap-2">
-          {OPTIONS.map(({ value, label }) => (
+        <div role="group" aria-label={t.projects.sortAria} className="flex gap-2">
+          {SORT_ORDER.map((value) => (
             <button
               key={value}
               type="button"
@@ -206,7 +207,7 @@ const RecentProjects = () => {
                   : 'border-black/10 bg-white text-black-100 hover:border-purple-500')
               }
             >
-              {label}
+              {t.projects.sort[value]}
             </button>
           ))}
         </div>
@@ -239,7 +240,9 @@ const RecentProjects = () => {
         </div>
       )}
 
-      {list.length === 0 && <p className="mt-10 text-center text-black-100">No projects with this color yet.</p>}
+      {list.length === 0 && (
+        <p className="mt-10 text-center text-black-100">{t.projects.empty}</p>
+      )}
 
       {/* Show more / less */}
       {list.length > pageSize && (
@@ -250,7 +253,7 @@ const RecentProjects = () => {
               onClick={() => setPages((n) => n + 1)}
               className="rounded-full bg-violet-600 px-6 py-2 text-sm font-bold text-white transition hover:bg-purple-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-600"
             >
-              Show more ({remaining})
+              {format(t.projects.showMore, { count: remaining })}
             </button>
           )}
           {pages > 1 && (
@@ -259,7 +262,7 @@ const RecentProjects = () => {
               onClick={() => setPages(1)}
               className="rounded-full border border-purple-500 bg-white px-6 py-2 text-sm font-bold text-purple-500 transition hover:bg-purple-500 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-600"
             >
-              Show less
+              {t.projects.showLess}
             </button>
           )}
         </div>
