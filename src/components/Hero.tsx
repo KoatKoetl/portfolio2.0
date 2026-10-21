@@ -3,6 +3,7 @@
 import React from 'react';
 import { FaLocationArrow } from 'react-icons/fa';
 import { useTranslation } from '../i18n/I18nProvider';
+import { HOME_SECTION_ID, handleSectionLink } from '../utils/scrollToSection';
 import MagicButton from './ui/MagicButton';
 import { Spotlight } from './ui/Spotlight';
 import TextGenerateEffect from './ui/TextGenerateEffect';
@@ -11,7 +12,7 @@ const Hero = () => {
   const t = useTranslation();
 
   return (
-    <div className="pb-20  pt-36">
+    <div id={HOME_SECTION_ID} className="pb-20 pt-20 scroll-mt-24">
       <div>
         <Spotlight className="-top-40 -left-10 md:-left-32 md:-top-20 h-screen" fill="white" />
         <Spotlight className="top-10 left-full h-[80vh] w-[50vw]" fill="blue" />
@@ -35,7 +36,7 @@ const Hero = () => {
               </p>
             </h1>
 
-            <a href="#projects">
+            <a href="#projects" onClick={handleSectionLink('projects')}>
               <MagicButton title={t.hero.cta} icon={<FaLocationArrow />} position="right" />
             </a>
           </div>

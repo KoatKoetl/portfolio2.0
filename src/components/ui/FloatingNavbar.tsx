@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 import { FaHome } from 'react-icons/fa';
 import { useTranslation } from '../../i18n/I18nProvider';
 import { cn } from '../../utils/cn';
+import { HOME_SECTION_ID, handleSectionLink } from '../../utils/scrollToSection';
 
 /** Section anchors are language independent; only the visible labels are translated. */
 const NAV_LINKS = [
@@ -54,19 +55,19 @@ const FloatingNav = ({ className }: { className?: string }) => {
           className
         )}
       >
-                <a
-          href="/"
+        <a
+          href={`#${HOME_SECTION_ID}`}
           aria-label={t.nav.home}
-          className="px-8 sm:px-2 py-1 text-neutral-600 dark:text-black dark:hover:text-purple-500 hover:text-black"
+          onClick={handleSectionLink(HOME_SECTION_ID)}
+          className="px-8 sm:px-2 py-1 flex justify-center items-center text-neutral-600 dark:text-black dark:hover:text-purple-500 hover:text-black"
         >
-          <button type="button" className="flex justify-center items-center">
-            <FaHome />
-          </button>
+          <FaHome />
         </a>
         {NAV_LINKS.map((navItem) => (
           <Link
             key={navItem.link}
             href={navItem.link}
+            onClick={handleSectionLink(navItem.link.slice(1))}
             className={cn(
               'relative dark:text-black items-center space-x-1 text-text-black dark:hover:text-purple-500 hover:text-black hidden sm:flex'
             )}
