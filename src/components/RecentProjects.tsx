@@ -188,13 +188,13 @@ const RecentProjects = () => {
   const hasPager = !isMobile && (remaining > 0 || pages > 1);
 
   return (
-    <div ref={sectionRef} className="py-20 bg-white scroll-mt-24" id="projects">
+    <div ref={sectionRef} className="py-10 md:py-20 bg-white scroll-mt-24" id="projects">
       <h2 className="heading text-black-100">
         {t.projects.headingLead} <span className="text-purple-500">{t.projects.headingAccent}</span>
       </h2>
 
       {/* Filter + sort by difficulty */}
-      <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-8">
+      <div className="mt-6 md:mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-8">
         <div className="flex items-center gap-3">
           <RarityHint />
           <div role="group" aria-label={t.projects.filterAria} className="flex items-center gap-2">
@@ -254,7 +254,7 @@ const RecentProjects = () => {
           <div
             ref={sliderRef}
             onScroll={onSlide}
-            className="mt-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 py-8 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            className="mt-4 md:mt-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 py-4 md:py-8 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           >
             <AnimatePresence mode="popLayout">{cards}</AnimatePresence>
           </div>

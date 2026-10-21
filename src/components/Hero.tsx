@@ -12,14 +12,14 @@ const Hero = () => {
   const t = useTranslation();
 
   return (
-    <div id={HOME_SECTION_ID} className="pb-20 pt-20 scroll-mt-24">
+    <div id={HOME_SECTION_ID} className="pb-4 pt-0 md:pb-20 md:pt-20 scroll-mt-24">
       <div>
         <Spotlight className="-top-40 -left-10 md:-left-32 md:-top-20 h-screen" fill="white" />
         <Spotlight className="top-10 left-full h-[80vh] w-[50vw]" fill="blue" />
         <Spotlight className="top-28 left-80 h-[80vh] w-[50vw]" fill="blue" />
       </div>
 
-      <div className="h-[50rem] w-full dark:bg-white bg-white dark:bg-grid-white/[0.03] bg-grid-black/[0.2] relative flex items-center justify-center">
+      <div className="min-h-[100svh] md:h-[50rem] md:min-h-0 w-full dark:bg-white bg-white dark:bg-grid-white/[0.03] bg-grid-black/[0.2] relative flex items-center justify-center">
         <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-white bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
 
         <div className="flex justify-center">

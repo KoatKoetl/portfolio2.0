@@ -8,11 +8,11 @@ const Approach = () => {
   const t = useTranslation();
 
   return (
-    <div className="w-full py-20" id="approach">
+    <div className="w-full py-10 md:py-20" id="approach">
       <h2 className="heading lg:mb-4 text-black-100">
         {t.approach.headingLead} <span className="text-purple-500">{t.approach.headingAccent}</span>
       </h2>
-      <div className="w-full mt-12">
+      <div className="w-full mt-6 md:mt-12">
         <CanvasRevealEffectDemo />
       </div>
     </div>
